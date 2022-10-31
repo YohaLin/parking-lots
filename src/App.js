@@ -11,10 +11,10 @@ function App() {
       <SideBar />
       <div>
         <Routes>
-          <Route exact path="/" element={<Parking />} />
-          <Route path="/payment" element={<Payment />} />
-          <Route path="/account" element={<Account />} />
-          <Route path="/setting" element={<Setting />} />
+          <Route exact path="/parking-lots/" element={<Parking />} />
+          <Route path="/parking-lots/payment" element={<Payment />} />
+          <Route path="/parking-lots/account" element={<Account />} />
+          <Route path="/parking-lots/setting" element={<Setting />} />
         </Routes>
       </div>
     </div>

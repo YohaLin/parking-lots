@@ -3,6 +3,7 @@ import { ReactComponent as SVGPayment } from "../images/SVGPayment.svg"
 import { ReactComponent as SVGAccount } from "../images/SVGAccount.svg"
 import { ReactComponent as SVGSetting } from "../images/SVGSetting.svg"
 
+ // eslint-disable-next-line
 export default {
   SVGParking, SVGPayment, SVGAccount, SVGSetting
 }

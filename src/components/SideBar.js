@@ -5,7 +5,7 @@ function SideBar() {
     <nav className="sidebar">
       <ul>
         <li>
-          <Link to="/">
+          <Link to="/parking-lots/">
             <div className="link-container">
               <Icons.SVGParking />
               <span>停車場</span>
@@ -13,7 +13,7 @@ function SideBar() {
           </Link>
         </li>
         <li>
-          <Link to="/payment">
+          <Link to="/parking-lots/payment">
             <div className="link-container" >
               <Icons.SVGPayment  />
               <span>支付</span>
@@ -21,7 +21,7 @@ function SideBar() {
           </Link>
         </li>
         <li>
-          <Link to="/account">
+          <Link to="/parking-lots/account">
             <div className="link-container">
               <Icons.SVGAccount />
               <span>帳號</span>
@@ -29,7 +29,7 @@ function SideBar() {
           </Link>
         </li>
         <li>
-          <Link to="/setting">
+          <Link to="/parking-lots/setting">
             <div className="link-container">
               <Icons.SVGSetting />
               <span>設定</span>

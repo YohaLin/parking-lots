@@ -8,7 +8,6 @@
   box-shadow: 0 -4px 12px 0 rgba(0, 0, 0, 0.2);
   z-index: 100;
 }
-
 .sidebar ul {
   display: flex;
   justify-content: space-between;
@@ -17,8 +16,7 @@
   width: 80%;
   height: 100%;
 }
-
-.link-container {
+.sidebar ul .link-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -32,16 +30,14 @@
     height: 100vh;
     box-shadow: 4px 0 12px 0 rgba(0, 0, 0, 0.2);
   }
-
   .sidebar ul {
     padding-top: 2rem;
     flex-direction: column;
     margin: 0 auto;
     height: 70%;
   }
-
-  .link-container span {
+  .sidebar ul .link-container span {
     font-size: 1rem;
     padding-top: 0.5rem;
   }
-}
+}/*# sourceMappingURL=sidebar.css.map */

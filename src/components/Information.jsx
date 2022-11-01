@@ -1,12 +1,13 @@
+import Icons from "../assets/images/icons"
+
 function Information() {
   return (
-    <div>
+    <div className="info_card">
       <div className="info__position">
-        position
+        <Icons.SVGPosition />
       </div>
       <div className="info__container">
-        <div>
-          black-section
+        <div className="info__dragger">
         </div>
         <div className="info__above">
           <div className="info__above-content">
@@ -16,11 +17,9 @@ function Information() {
               <p>30元/小時</p>
             </div>
             <div className="info__above-right">
-              navigator
+              <Icons.SVGNavigator />
+              <div>立即導航</div>
             </div>
-          </div>
-          <div className="info__above-button">
-            <button>加到最愛</button>
           </div>
         </div>
         <hr/>

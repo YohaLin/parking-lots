@@ -25,6 +25,10 @@
   font-size: 12px;
 }
 
+.hover:hover{
+  transform: scale(1.2,1.2);
+}
+
 @media screen and (min-width: 992px) {
   .sidebar {
     width: 5.75rem;

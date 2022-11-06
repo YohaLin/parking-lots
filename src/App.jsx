@@ -1,4 +1,4 @@
-import Parking from "./pages/Parking";
+import Parking from "./pages/parking";
 import Payment from "./pages/Payment";
 import Account from "./pages/Account";
 import Setting from "./pages/Setting";

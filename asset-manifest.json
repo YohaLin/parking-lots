@@ -1,21 +1,25 @@
 {
   "files": {
-    "main.css": "/parking-lots/static/css/main.d2dcacf4.css",
-    "main.js": "/parking-lots/static/js/main.eea9082a.js",
+    "main.css": "/parking-lots/static/css/main.d2b1f3a9.css",
+    "main.js": "/parking-lots/static/js/main.c123075d.js",
+    "static/media/SVGFilter.svg": "/parking-lots/static/media/SVGFilter.03964ac523959597a3b005c7d50d35d2.svg",
     "static/media/SVGSetting.svg": "/parking-lots/static/media/SVGSetting.3e7e8942e6d6165f94d7aa5d6d1cd4d4.svg",
     "static/media/SVGPayment.svg": "/parking-lots/static/media/SVGPayment.a46764e2186f6e5ebda942013cf75049.svg",
     "static/media/SVGPosition.svg": "/parking-lots/static/media/SVGPosition.a59fff027f31348fa4627e22ef390e5c.svg",
     "static/media/SVGAccount.svg": "/parking-lots/static/media/SVGAccount.f65c4fb41abbc8b462ee5b024b93c223.svg",
+    "static/media/SVGLastStep.svg": "/parking-lots/static/media/SVGLastStep.1afa7a80eeaefd66f750506e7d2e1894.svg",
     "static/media/SVGParking.svg": "/parking-lots/static/media/SVGParking.3f67adf1d208f28947b96f8b74ba9b09.svg",
     "index.html": "/parking-lots/index.html",
+    "static/media/SVGFind.svg": "/parking-lots/static/media/SVGFind.ab3731641ddc1098c91a9e4524a1d0d6.svg",
     "static/media/SVGNavigator.svg": "/parking-lots/static/media/SVGNavigator.59f8f2a27ac13766ae709661eab4aca5.svg",
+    "static/media/SVGClearText.svg": "/parking-lots/static/media/SVGClearText.191e010071c8dc6bf7fb17809010df94.svg",
     "static/media/marker.svg": "/parking-lots/static/media/marker.b8eb4b54a5de1f31e93bd589f7bb6e31.svg",
     "static/media/markerZero.svg": "/parking-lots/static/media/markerZero.4408edbc72bb4c28cdb207cf44e6795c.svg",
-    "main.d2dcacf4.css.map": "/parking-lots/static/css/main.d2dcacf4.css.map",
-    "main.eea9082a.js.map": "/parking-lots/static/js/main.eea9082a.js.map"
+    "main.d2b1f3a9.css.map": "/parking-lots/static/css/main.d2b1f3a9.css.map",
+    "main.c123075d.js.map": "/parking-lots/static/js/main.c123075d.js.map"
   },
   "entrypoints": [
-    "static/css/main.d2dcacf4.css",
-    "static/js/main.eea9082a.js"
+    "static/css/main.d2b1f3a9.css",
+    "static/js/main.c123075d.js"
   ]
 }

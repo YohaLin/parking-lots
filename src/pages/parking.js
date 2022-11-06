@@ -2,7 +2,14 @@
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  myPositionActions,
+  parkingActions,
+} from "../store/store";
+
 import Information from "../components/Information";
+import SearchBar from "../components/SearchBar";
+import Filter from "../components/Filter";
 import key from "../key";
 import convertProj4 from "../helpers/proj4"; // 將EPSG:3826 轉乘EPSG:4326
 
@@ -22,15 +29,16 @@ function Parking() {
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [data, setData] = useState([]);
   const [remainingCar, setRemainingCar] = useState([]);
-  const [dataId, setDataId] = useState(null)
-  const [info, setInfo] = useState([])
   const [position, setPosition] = useState({
     lat: 25.04,
     lng: 121.5,
   });
-  const myPosition = useSelector((state) => state.myPosition); // boolean
-
-
+  const myPosition = useSelector((state) => state.myPosition.myPosition); // boolean
+  const info = useSelector((state) => state.parking.info);
+  const dataId = useSelector((state) => state.parking.dataId);
+  const searchLatLng = useSelector((state) => state.search.searchLatLng);
+  const showFilter = useSelector((state) => state.filter.showFilter);
+  const district = useSelector((state) => state.filter.district);
 
   // 取得停車場剩餘車數資料API
   async function fetchRemainingCarHandler() {
@@ -68,7 +76,7 @@ function Parking() {
           area: park.area,
           name: park.name,
           summary: park.summary,
-          address: park.address,
+          address: park.address ? park.address : "無地址資料",
           tel: park.tel,
           payex: park.payex,
           serviceTime: park.serviceTime,
@@ -76,8 +84,8 @@ function Parking() {
           tw97y: park.tw97y,
           totalcar: park.totalcar,
           FareInfo: park.FareInfo.WorkingDay
-                    ? park.FareInfo.WorkingDay[0].Fare
-                    : "?",
+            ? park.FareInfo.WorkingDay[0].Fare
+            : "?",
           remainingCar: findCar ? findCar.remainingCar : 0,
         };
       });
@@ -89,13 +97,13 @@ function Parking() {
   }
 
   // 使用者點擊想查詢的停車場，進行比對
-  function getInfo(dataId){
-    const info = data.find(park => {
-      return park.id === dataId
-    })
+  function getInfo(dataId) {
+    const info = data.find((park) => {
+      return park.id === dataId;
+    });
     return {
-      ...info
-    }
+      ...info,
+    };
   }
 
   // 進入網頁就定位目前的位置
@@ -118,21 +126,30 @@ function Parking() {
   useEffect(() => {
     if (myPosition === true) {
       map.panTo(position);
-      dispatch({ type: "notMyPosition" }); // 當Marker定位完之後就把狀態設為false
+      dispatch(myPositionActions.notMyPosition()); // 當Marker定位完之後就把狀態設為false
     }
     // eslint-disable-next-line
   }, [myPosition]);
 
   // 當取得使用者點擊停車場的id，會將資料放進info
   useEffect(() => {
-    console.log('change',dataId,info)
-    if(dataId) {
-    setInfo(getInfo(dataId))
+    console.log("change", dataId, info);
+    if (dataId) {
+      dispatch(parkingActions.getInfo(getInfo(dataId)));
     }
-  }, [dataId])
+  }, [dataId]);
 
+  useEffect(() => {
+    if (isLoaded) {
+      if (searchLatLng.lat && searchLatLng.lng) {
+        map.panTo(searchLatLng);
+      } else {
+        return
+      }
+    }
 
-  
+    return;
+  }, [searchLatLng]);
 
   // libraries: API的名稱, key()是從key.js來的
   const { isLoaded } = useJsApiLoader({
@@ -147,6 +164,8 @@ function Parking() {
   // 渲染畫面
   return (
     <div style={{ height: "100vh", width: "100vw" }}>
+      {showFilter === true && <Filter />}
+      <SearchBar />
       {/* 當取得停車場的id時，才渲染卡片。info是物件，不能用info.length */}
       {info.id && <Information data={info} />}
       <GoogleMap
@@ -159,40 +178,47 @@ function Parking() {
           mapTypeControl: false,
           fullscreenControl: false,
         }}
-        onLoad={(map) => setMap(map)}
+        onLoad={(map) => {
+          console.log("地圖搞鬼");
+          setMap(map);
+        }}
       >
         {/* 印出想要的Marker */}
-        <Marker position={position} draggable={true} />
+        <Marker position={position} />
         {data.map((park) => {
-          if (park.area === "萬華區" && park.remainingCar > 0) {
-            return (
-              <Marker
-                icon={{
-                  url: marker,
-                }}
-                label={`$${ park.FareInfo }`}
-                key={park.id}
-                onClick={() => {
-                  setDataId(park.id)
-                }}
-                position={convertProj4(park.tw97x, park.tw97y)}
-              />
-            );
-          } else if (park.area === "萬華區" && !park.remainingCar) {
-            return (
-              <Marker
-                icon={{
-                  url: markerZero,
-                }}
-                label={`$${ park.FareInfo }`}
-                key={park.id}
-                onClick={() => {
-                  setDataId(park.id)
-                }}
-                position={convertProj4(park.tw97x, park.tw97y)}
-              />
-            );
+          // 篩掉沒有area的可能
+          if(park.area){
+              if (park.area === district && park.remainingCar > 0) {
+              return (
+                <Marker
+                  icon={{
+                    url: marker,
+                  }}
+                  label={`$${park.FareInfo}`}
+                  key={park.id}
+                  onClick={() => {
+                    dispatch(parkingActions.getDataId(park.id));
+                  }}
+                  position={convertProj4(park.tw97x, park.tw97y)}
+                />
+              );
+            } else if (park.area === district && !park.remainingCar) {
+              return (
+                <Marker
+                  icon={{
+                    url: markerZero,
+                  }}
+                  label={`$${park.FareInfo}`}
+                  key={park.id}
+                  onClick={() => {
+                    dispatch(parkingActions.getDataId(park.id));
+                  }}
+                  position={convertProj4(park.tw97x, park.tw97y)}
+                />
+              );
+            }
           }
+          return
         })}
       </GoogleMap>
     </div>

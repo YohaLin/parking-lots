@@ -1,4 +1,5 @@
 import { useDispatch } from 'react-redux';
+import { myPositionActions } from "../store/store";
 import Icons from "../assets/images/icons"
 
 function Information({data}) {
@@ -6,7 +7,7 @@ function Information({data}) {
 
   // 不同情況dispatch不同type
   const myPositionHandler = () => {
-    dispatch({ type: 'myPosition'})
+    dispatch(myPositionActions.myPosition())
   }
 
   return (
@@ -21,7 +22,7 @@ function Information({data}) {
           <div className="info__above-content">
             <div className="info__above-left">
               <h3>{data.name}</h3>
-              <p>總車位 {data.totalcar} 空位數 0</p>
+              <p>總車位 {data.totalcar} 空位數 {data.remainingCar}</p>
               <p>{data.FareInfo}元/小時</p>
             </div>
             <div className="info__above-right">
@@ -35,7 +36,8 @@ function Information({data}) {
           <div className="info__below-detail">
             <p>營業時間： {data.serviceTime}</p>
             <p>費率： {data.payex}</p>
-            <p>地址： {data.area + data.address} </p>
+            <p>區域： {data.area} </p>
+            <p>地址： {data.address} </p>
             <p>聯絡電話： 02-{data.tel}</p>
           </div>
         </div>

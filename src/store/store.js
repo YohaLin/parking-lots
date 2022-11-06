@@ -1,27 +1,102 @@
-// redux @4.2.0 捨棄了createStore的寫法
-import { legacy_createStore as createStore } from 'redux'
+// configureStore 可以傳出很多個reducer
+import { createSlice, configureStore } from '@reduxjs/toolkit'
 
-// 定義state，並用action來改變狀態
-const counterRedux = ( state = {myPosition : false }, action ) => {
-  if (action.type === 'myPosition') {
-    console.log('hi')
-    return {
-      myPosition: true
-    }
-  }
-
-  if (action.type === 'notMyPosition') {
-    console.log('hi-no')
-    return {
-      myPosition: false
-    }
-  }
-
-  return state
+const initialMyPositionState = {
+  myPosition: false
 }
 
+const myPositionSlice = createSlice({
+  name: 'myPostion',
+  initialState: initialMyPositionState,
+  reducers: {
+    myPosition(state) {
+      state.myPosition = true
+    },
+    notMyPosition(state) {
+      state.myPosition = false
+    }
+  }
+})
+
+const initialParkingState = {
+  info: [],
+  dataId: null
+}
+
+const parkingSlice = createSlice({
+  name:'parking',
+  initialState: initialParkingState,
+  reducers: {
+    getDataId(state, actions){
+      state.dataId = actions.payload
+    },
+    removeDataId(state){
+      state.dataId = null
+    },
+    getInfo(state, actions){
+      state.info = actions.payload
+    },
+    removeInfo(state){
+      state.info = []
+    }
+  }
+})
+
+const initialSearchState = {
+  searchLatLng: {lat:"", lng:""},
+}
+
+const searchSlice = createSlice({
+  name:'search',
+  initialState: initialSearchState,
+  reducers: {
+    getSearchLatLng(state, actions){
+      state.searchLatLng = actions.payload
+    },
+    removeSearchLatLng(state, actions){
+      state.searchLatLng = actions.payload
+    }
+  }
+})
+
+const initialFilterState = {
+  showFilter: false,
+  district: ''
+}
+
+const filterSlice = createSlice({
+  name: 'filter',
+  initialState: initialFilterState,
+  reducers: {
+    showFilter(state) {
+      state.showFilter = true
+    },
+    notShowFilter(state) {
+      state.showFilter = false
+    },
+    getDistrict(state, actions) {
+      state.district = actions.payload
+    },
+    removeDistrict(state) {
+      state.district = ''
+    }
+  }
+})
+
 // 定義store
-const store = createStore(counterRedux)
+const store = configureStore({
+  reducer: {
+    myPosition: myPositionSlice.reducer,
+    parking: parkingSlice.reducer,
+    search: searchSlice.reducer,
+    filter: filterSlice.reducer
+  } 
+})
+
+export const myPositionActions = myPositionSlice.actions
+export const parkingActions = parkingSlice.actions
+export const searchActions = searchSlice.actions
+export const filterActions = filterSlice.actions
 
 // 把store提供到src/index.js來用，這樣提供一次就好
 export default store

@@ -1,10 +1,11 @@
 // Marker => 可以加上地標圖示
 import { useJsApiLoader, GoogleMap, Marker } from "@react-google-maps/api";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import {
   myPositionActions,
   parkingActions,
+  filterActions,
 } from "../store/store";
 
 import Information from "../components/Information";
@@ -12,6 +13,7 @@ import SearchBar from "../components/SearchBar";
 import Filter from "../components/Filter";
 import key from "../key";
 import convertProj4 from "../helpers/proj4"; // 將EPSG:3826 轉乘EPSG:4326
+import correctDistrict from "../helpers/correctDistrict";
 
 import marker from "./../assets/images/marker.svg";
 import markerZero from "./../assets/images/markerZero.svg";
@@ -39,6 +41,10 @@ function Parking() {
   const searchLatLng = useSelector((state) => state.search.searchLatLng);
   const showFilter = useSelector((state) => state.filter.showFilter);
   const district = useSelector((state) => state.filter.district);
+  const showRemaining = useSelector((state) => state.filter.showRemaining);
+
+  const houses = useMemo(() => generateHouses(position), [position]);
+  console.log(houses);
 
   // 取得停車場剩餘車數資料API
   async function fetchRemainingCarHandler() {
@@ -73,16 +79,15 @@ function Parking() {
         const findCar = remainingCar.find((car) => car.id === park.id);
         return {
           id: park.id,
-          area: park.area,
-          name: park.name,
-          summary: park.summary,
+          area: correctDistrict(park.id, park.area), // 過濾不正確的行政區資料
+          name: park.name ? park.name : "無名稱資料",
           address: park.address ? park.address : "無地址資料",
-          tel: park.tel,
-          payex: park.payex,
-          serviceTime: park.serviceTime,
+          tel: park.tel ? park.tel : "無聯絡資訊",
+          payex: park.payex ? park.payex : "無費率資料",
+          serviceTime: park.serviceTime ? park.serviceTime : "無營業時間資料",
           tw97x: park.tw97x,
           tw97y: park.tw97y,
-          totalcar: park.totalcar,
+          totalcar: park.totalcar ? park.totalcar : "?",
           FareInfo: park.FareInfo.WorkingDay
             ? park.FareInfo.WorkingDay[0].Fare
             : "?",
@@ -104,6 +109,18 @@ function Parking() {
     return {
       ...info,
     };
+  }
+
+  function generateHouses(position) {
+    const _houses = [];
+    for (let i = 0; i < 10; i++) {
+      const direction = Math.random() < 0.5 ? -120 : 120;
+      _houses.push({
+        lat: position.lat + Math.random() / direction,
+        lng: position.lng + Math.random() / direction,
+      });
+    }
+    return _houses;
   }
 
   // 進入網頁就定位目前的位置
@@ -144,10 +161,9 @@ function Parking() {
       if (searchLatLng.lat && searchLatLng.lng) {
         map.panTo(searchLatLng);
       } else {
-        return
+        return;
       }
     }
-
     return;
   }, [searchLatLng]);
 
@@ -184,11 +200,45 @@ function Parking() {
         }}
       >
         {/* 印出想要的Marker */}
-        <Marker position={position} />
+        {isLoaded && <Marker position={position} />}
+        {houses.map((house) => {
+          return (
+            <Marker
+              icon={{
+                url: marker,
+              }}
+              key={house.lat}
+              position={house}
+            />
+          );
+        })}
         {data.map((park) => {
-          // 篩掉沒有area的可能
-          if(park.area){
-              if (park.area === district && park.remainingCar > 0) {
+          if (
+            showRemaining &&
+            park.area === district &&
+            park.remainingCar > 0
+          ) {
+            console.log(showRemaining);
+            return (
+              <Marker
+                icon={{
+                  url: marker,
+                }}
+                label={`$${park.FareInfo}`}
+                key={park.id}
+                onClick={() => {
+                  dispatch(parkingActions.getDataId(park.id));
+                }}
+                position={convertProj4(park.tw97x, park.tw97y)}
+              />
+            );
+          } else {
+            if (
+              !showRemaining &&
+              park.area === district &&
+              park.remainingCar > 0
+            ) {
+              console.log(showRemaining);
               return (
                 <Marker
                   icon={{
@@ -202,7 +252,12 @@ function Parking() {
                   position={convertProj4(park.tw97x, park.tw97y)}
                 />
               );
-            } else if (park.area === district && !park.remainingCar) {
+            } else if (
+              !showRemaining &&
+              park.area === district &&
+              !park.remainingCar
+            ) {
+              console.log(showRemaining);
               return (
                 <Marker
                   icon={{
@@ -218,7 +273,7 @@ function Parking() {
               );
             }
           }
-          return
+          return;
         })}
       </GoogleMap>
     </div>

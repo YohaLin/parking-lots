@@ -61,6 +61,7 @@ const searchSlice = createSlice({
 
 const initialFilterState = {
   showFilter: false,
+  showRemaining: false,
   district: ''
 }
 
@@ -73,6 +74,12 @@ const filterSlice = createSlice({
     },
     notShowFilter(state) {
       state.showFilter = false
+    },
+    showRemaining(state) {
+      state.showRemaining = true
+    },
+    notShowRemaining(state) {
+      state.showRemaining = false
     },
     getDistrict(state, actions) {
       state.district = actions.payload

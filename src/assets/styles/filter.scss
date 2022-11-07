@@ -1,7 +1,8 @@
-.filter{
+.filter {
   width: 80%;
   height: 100vh;
-  background-color: #FFF;
+  max-width: 28rem;
+  background-color: #fff;
   position: fixed;
   top: 0;
   right: 0;
@@ -13,12 +14,13 @@
     padding: 0.5rem;
   }
 
-  &__LastStep, h2 {
+  &__LastStep,
+  h2 {
     margin-bottom: 0.5rem;
   }
 
   &__button {
-    &-container{
+    &-container {
       // border: 2px solid red;
       height: 100%;
       width: 90%;
@@ -28,13 +30,13 @@
       justify-content: space-between;
     }
 
-    &-items{
+    &-items {
       // border: 2px solid grey;
       border-radius: 5px;
       height: 100%;
     }
 
-    &-item{
+    &-item {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -42,6 +44,65 @@
 
       flex-wrap: wrap;
     }
+
+    &-showRemaining,
+    &-showDistrict {
+      background-color: #07b53b;
+    }
+
+    &-notShowRemaining {
+      background-color: #07b53b;
+    }
   }
 }
 
+@media screen and (min-width: 992px) {
+  .filter {
+    width: 30%;
+
+    &__container {
+      padding: 0.5rem;
+    }
+
+    &__LastStep,
+    h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    &__button {
+      &-container {
+        // border: 2px solid red;
+        height: 100%;
+        width: 90%;
+        margin: 0 auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      &-items {
+        // border: 2px solid grey;
+        border-radius: 5px;
+        height: 100%;
+      }
+
+      &-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-width: 5rem;
+
+        flex-wrap: wrap;
+      }
+
+      &-showRemaining,
+      &-showDistrict {
+        background-color: #07b53b;
+      }
+
+      &-notShowRemaining {
+        background-color: #07b53b;
+      }
+    }
+  }
+}

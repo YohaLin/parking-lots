@@ -83,6 +83,8 @@ function SearchBar() {
   useEffect(()=> {
     if(district){
       setValue(district);
+    }else{
+      setValue("")
     }
     return
   }, [district])

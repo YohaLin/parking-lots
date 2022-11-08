@@ -148,7 +148,7 @@ function Parking() {
   // 當剩餘停車位資料出現時才fetch停車場資料，並定位
   useEffect(() => {
     fetchParkingLotsHandler();
-    navigator.geolocation.getCurrentPosition((position) => {
+    navigator.geolocation.watchPosition((position) => {
       setPosition({
         lat: position.coords.latitude,
         lng: position.coords.longitude,

@@ -23,17 +23,6 @@ function Filter() {
     "北投區",
   ];
 
-
-  // 點擊上一步按鈕可以關掉篩選框
-  function closeFilter() {
-    // 如果使用者只選擇「只顯示剩餘車位」卻沒有點選行政區，跳提醒(為了不渲染出全台北的「有剩餘車位停車場」)
-    if(showRemaining && !district) {
-      return alert("請選擇區域")
-    } else{
-      dispatch(filterActions.notShowFilter());
-    }
-  }
-
   const RenderDistrictButton = District.map((District) => {
     return (
       <li key={District} className="filter__button-items">
@@ -56,7 +45,9 @@ function Filter() {
       <form className="filter__container">
         <Icons.SVGLastStep
           className="filter__SVGLastStep"
-          onClick={closeFilter}
+          onClick={()=>{
+            dispatch(filterActions.notShowFilter());
+          }}
         />
         <h2>是否只顯示剩餘車位：預設為「否」</h2>
         <ul className="filter__button-container">

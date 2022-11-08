@@ -1,19 +1,11 @@
-import { useDispatch } from 'react-redux';
-import { myPositionActions } from "../store/store";
 import Icons from "../assets/images/icons"
+import Position from "./../components/Position"
 
 function Information({data}) {
-  const dispatch = useDispatch()
-
-  // 不同情況dispatch不同type
-  const myPositionHandler = () => {
-    dispatch(myPositionActions.myPosition())
-  }
-
   return (
-    <div className="info_card">
+    <div className="info__card">
       <div className="info__position">
-        <Icons.SVGPosition onClick={myPositionHandler} />
+        <Position />
       </div>
       <div className="info__container">
         <div className="info__dragger">
@@ -25,10 +17,10 @@ function Information({data}) {
               <p>總車位 {data.totalcar} 空位數 {data.remainingCar}</p>
               <p>{data.FareInfo}元/小時</p>
             </div>
-            <div className="info__above-right">
+            <a href={`https://www.google.com/maps/search/?api=1&query=${data.name},${data.address !== "無地址資料"? data.address:""}` }className="info__above-right" >
               <Icons.SVGNavigator />
               <div>立即導航</div>
-            </div>
+            </a>
           </div>
         </div>
         <hr/>

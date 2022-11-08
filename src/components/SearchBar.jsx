@@ -27,7 +27,6 @@ function SearchBar() {
   const handleSelect = async (val) => {
     try {
       if (ready) {
-        console.log(val);
         setValue(val); // 點選地點後，將結果印在搜尋框中
         clearSuggestions();
 
@@ -42,7 +41,6 @@ function SearchBar() {
       setValue("");
     }
   };
-  console.log(searchLatLng);
 
   // 渲染搜尋後的推薦清單
   const RenderSearchList = () => {

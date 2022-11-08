@@ -12,8 +12,10 @@ import Information from "../components/Information";
 import SearchBar from "../components/SearchBar";
 import Filter from "../components/Filter";
 import key from "../key";
+
 import convertProj4 from "../helpers/proj4"; // 將EPSG:3826 轉乘EPSG:4326
 import correctDistrict from "../helpers/correctDistrict";
+import distance from "../helpers/convertDistanceUnit";
 
 import marker from "./../assets/images/marker.svg";
 import markerZero from "./../assets/images/markerZero.svg";
@@ -85,8 +87,7 @@ function Parking() {
           tel: park.tel ? park.tel : "無聯絡資訊",
           payex: park.payex ? park.payex : "無費率資料",
           serviceTime: park.serviceTime ? park.serviceTime : "無營業時間資料",
-          tw97x: park.tw97x,
-          tw97y: park.tw97y,
+          LatLng: convertProj4(park.tw97x, park.tw97y),
           totalcar: park.totalcar ? park.totalcar : "?",
           FareInfo: park.FareInfo.WorkingDay
             ? park.FareInfo.WorkingDay[0].Fare
@@ -173,6 +174,31 @@ function Parking() {
     libraries,
   });
 
+  const RenderNearbyMarker = data.map((park) => {
+    const kilometer = distance(
+      position.lat,
+      position.lng,
+      park.LatLng.lat,
+      park.LatLng.lng,
+      "K"
+    );
+    if (kilometer < 5) {
+      return (
+        <Marker
+          icon={{
+            url: marker,
+          }}
+          key={park.id}
+          label={`$${park.FareInfo}`}
+          position={park.LatLng}
+          onClick={() => {
+            dispatch(parkingActions.getDataId(park.id));
+          }}
+        />
+      );
+    }
+  });
+
   if (!isLoaded) {
     return <div>loading</div>;
   }
@@ -201,17 +227,7 @@ function Parking() {
       >
         {/* 印出想要的Marker */}
         {isLoaded && <Marker position={position} />}
-        {houses.map((house) => {
-          return (
-            <Marker
-              icon={{
-                url: marker,
-              }}
-              key={house.lat}
-              position={house}
-            />
-          );
-        })}
+        {RenderNearbyMarker}
         {data.map((park) => {
           if (
             showRemaining &&
@@ -229,7 +245,7 @@ function Parking() {
                 onClick={() => {
                   dispatch(parkingActions.getDataId(park.id));
                 }}
-                position={convertProj4(park.tw97x, park.tw97y)}
+                position={park.LatLng}
               />
             );
           } else {
@@ -249,7 +265,7 @@ function Parking() {
                   onClick={() => {
                     dispatch(parkingActions.getDataId(park.id));
                   }}
-                  position={convertProj4(park.tw97x, park.tw97y)}
+                  position={park.LatLng}
                 />
               );
             } else if (
@@ -268,7 +284,7 @@ function Parking() {
                   onClick={() => {
                     dispatch(parkingActions.getDataId(park.id));
                   }}
-                  position={convertProj4(park.tw97x, park.tw97y)}
+                  position={park.LatLng}
                 />
               );
             }

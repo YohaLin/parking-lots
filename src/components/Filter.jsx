@@ -92,6 +92,7 @@ function Filter() {
         <button onClick={(e)=>{
           e.preventDefault()
           dispatch(filterActions.removeDistrict())
+          dispatch(filterActions.notShowRemaining());
         }}>
           取消選取
         </button>

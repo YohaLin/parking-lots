@@ -1,0 +1,23 @@
+.about{
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+
+  &__container{
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -60%);
+  }
+
+  &__undrawParking{
+    width: 60vw;
+    height: 60vh;
+    margin-bottom: 1rem;
+  }
+
+  &__text {
+    color: #07B53B;
+  }
+}

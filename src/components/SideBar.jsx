@@ -13,26 +13,10 @@ function SideBar() {
           </Link>
         </li>
         <li>
-          <Link to="/payment">
-            <div className="link-container" >
-              <Icons.SVGPayment  />
-              <span>支付</span>
-            </div>
-          </Link>
-        </li>
-        <li>
-          <Link to="/account">
+          <Link to="/about">
             <div className="link-container">
               <Icons.SVGAccount />
-              <span>帳號</span>
-            </div>
-          </Link>
-        </li>
-        <li>
-          <Link to="/setting">
-            <div className="link-container">
-              <Icons.SVGSetting />
-              <span>設定</span>
+              <span>關於</span>
             </div>
           </Link>
         </li>

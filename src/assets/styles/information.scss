@@ -1,5 +1,5 @@
 .info {
-  &_card {
+  &__card {
     width: 92%;
     max-width: 500px;
     position: fixed;
@@ -58,7 +58,7 @@
 
 @media screen and (min-width: 992px) {
   .info {
-    &_card {
+    &__card {
       all: unset;
       display: flex;
       position: absolute;

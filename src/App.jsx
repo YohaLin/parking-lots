@@ -1,9 +1,8 @@
 import Parking from "./pages/parking";
-import Payment from "./pages/Payment";
-import Account from "./pages/Account";
-import Setting from "./pages/Setting";
+import About from "./pages/About";
 import { HashRouter, Route, Routes } from "react-router-dom";
 import SideBar from "./components/SideBar";
+import NotFound from "./pages/NotFound";
 
 function App() {
   const page = (children, page) => {
@@ -21,10 +20,9 @@ function App() {
         <HashRouter>
           <Routes>
             <Route exact path="/" element={page(<Parking />, "parking")} />
-            <Route path="/payment" element={page(<Payment />, null)} />
-            <Route path="/account" element={page(<Account /> ,null)} />
-            <Route path="/setting" element={page(<Setting />, null)} />
-            <Route path="*" element={page(<Parking />)} />
+            <Route exact path="/parking" element={page(<Parking />, "parking")} />
+            <Route path="/about" element={page(<About /> ,null)} />
+            <Route path="*" element={page(<NotFound />)} />
           </Routes>
         </HashRouter>
       </div>

@@ -1,70 +1,45 @@
-# Getting Started with Create React App
+# 篩篩車
+為您篩出台北市中最適合的停車位
+****
+## 產品資訊
+#####產品連結看這邊：https://yohalin.github.io/parking-lots/
+#### ＊Mobile
+![GITHUB](./src/assets/images/mobile.png)
+#### ＊RWD
+![GITHUB](./src/assets/images/RWD.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Available Scripts
-
-In the project directory, you can run:
-
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### ＊功能：
+##### 1.基本功能：
+* 使用者進入網頁時，可以自動定位到該位置。
+* 使用者也可以點擊定位按將畫面導至當前位置。
+* 使用者可以查看600公尺內的停車場。
+* 使用者可以自由放大或縮小地圖。
+##### 2.詳細資訊：
+* 使用者點擊停車場地標時，可以查看詳細資料。
+* 使用者點擊導航按鈕可以連至Google Map應用程式，並導航。
+##### 3.篩選功能：
+* 使用者可以切換地圖模式。
+* 使用者可以決定地圖上是否只顯示目前有剩餘停車位的停車場地標。
+* 使用者可以點擊想查看的行政區停車場，並將畫面引導至該行政區。
+##### 4.搜尋功能：
+* 使用者可以輸入想查看的地方，並將畫面引導至該處。
+* 使用者可以點擊刪除按鈕刪除已輸入的文字。
+****
+#### ＊開始使用：
+##### Clone the project:
+    git clone https://github.com/YohaLin/parking-lots.git
+##### install:
+    npm install
+##### run the project:
+    npm run start
+****
+#### ＊開發工具：
+react @18.2.0
+react-router-dom @18.2.0
+react-google-maps api @2.13.1
+redux toolkit @1.9.0
+proj4 @2.8.0
+sweetalert2 @11.6.7
+sass @1.55.0
+jest @27.5.1
+babel @7.20.2

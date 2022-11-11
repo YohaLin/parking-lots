@@ -2,7 +2,7 @@
 為您篩出台北市中最適合的停車位
 ****
 ## 產品資訊
-#####產品連結看這邊：https://yohalin.github.io/parking-lots/
+##### 產品連結看這邊：https://yohalin.github.io/parking-lots/
 #### ＊Mobile
 ![GITHUB](./src/assets/images/mobile.png)
 #### ＊RWD
@@ -34,12 +34,12 @@
     npm run start
 ****
 #### ＊開發工具：
-react @18.2.0
-react-router-dom @18.2.0
-react-google-maps api @2.13.1
-redux toolkit @1.9.0
-proj4 @2.8.0
-sweetalert2 @11.6.7
-sass @1.55.0
-jest @27.5.1
-babel @7.20.2
+* react @18.2.0
+* react-router-dom @18.2.0
+* react-google-maps api @2.13.1
+* redux toolkit @1.9.0
+* proj4 @2.8.0
+* sweetalert2 @11.6.7
+* sass @1.55.0
+* jest @27.5.1
+* babel @7.20.2

@@ -18,13 +18,15 @@
     // border: 1px solid black;
     border-radius: 0.5rem;
     padding: 0.75rem;
+    color:#696974;
     background-color: white;
+    box-shadow: 0 0 8px 0 rgba(125, 219, 185, 0.5);
     font-size: 0.75rem;
     line-height: 1.125rem;
   }
 
   &__dragger {
-    background-color: #a1aaa4;
+    background-color: #696974;
     height: 0.25rem;
     width: 2rem;
     border-radius: 2px;

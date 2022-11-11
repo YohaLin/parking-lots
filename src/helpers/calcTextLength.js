@@ -24,4 +24,7 @@ function renderText( str, length ) {
   return string 
 }
 
-export default renderText
+
+
+module.exports = renderText
+// export default renderText

@@ -17,9 +17,9 @@ function Information({data}) {
               <p>總車位 {data.totalcar} 空位數 {data.remainingCar}</p>
               <p>{data.FareInfo}元/小時</p>
             </div>
-            <a href={`https://www.google.com/maps/search/?api=1&query=${data.name},${data.address !== "無地址資料"? data.address:""}` }className="info__above-right" >
+            <a href={`https://www.google.com/maps/dir/?api=1&destination=${data.name},${data.address !== "無地址資料"? data.address:""}` }className="info__above-right" >
               <Icons.SVGNavigator />
-              <div>立即導航</div>
+              <div style={{color: "#07B53B"}}>立即導航</div>
             </a>
           </div>
         </div>

@@ -305,7 +305,7 @@ function Parking() {
             icon={{
               url: info.remainingCar ? clickedMarker : clickedMarkerZero
             }}
-            label={info.remainingCar}
+            label={String(info.remainingCar)}
             onClick={() => {
               dispatch(parkingActions.getDataId(info.id));
             }}

@@ -114,18 +114,25 @@ function SearchBar() {
         {value && (
           <Icons.SVGClearText
             className="search__input-clearText"
-            onClick={clearSearchText}
+            onClick={(e)=>{
+              e.preventDefault()
+              clearSearchText()
+            }}
           />
         )}
         {/* <Icons.SVGFind className="search__input-find" /> */}
         <button>
           <Icons.SVGLastStep
           className="search__input-lastStep"
-          onClick={handleLastStep}
+          onClick={(e)=>{
+              e.preventDefault()
+              handleLastStep()
+            }}
         />
         </button>
         <button className="search__input-filter">
-          <Icons.SVGFilter onClick={() => {
+          <Icons.SVGFilter onClick={(e) => {
+            e.preventDefault()
             if(showFilter){
               return dispatch(filterActions.notShowFilter());
             }else{

@@ -46,7 +46,8 @@ function Filter() {
       <button className="filter__header-container">
         <Icons.SVGLastStepInFilter
           className="filter__header-SVGLastStep"
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault()
             dispatch(filterActions.notShowFilter());
           }}
         />

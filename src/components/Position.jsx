@@ -10,7 +10,10 @@ function Position() {
     dispatch(myPositionActions.myPosition())
   }
   return (
-    <Icons.SVGPosition onClick={myPositionHandler} />
+    <Icons.SVGPosition onClick={(e)=>{
+      e.preventDefault()
+      myPositionHandler()
+    }} />
   );
 }
 

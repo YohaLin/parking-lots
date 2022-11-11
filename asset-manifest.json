@@ -1,28 +1,29 @@
 {
   "files": {
-    "main.css": "/parking-lots/static/css/main.767898a3.css",
-    "main.js": "/parking-lots/static/js/main.78691ff7.js",
+    "main.css": "/parking-lots/static/css/main.6c782830.css",
+    "main.js": "/parking-lots/static/js/main.32be845f.js",
     "static/media/undrawIsLoaded.svg": "/parking-lots/static/media/undrawIsLoaded.0fbfdd1b856a1c76814d0a7db022d1ec.svg",
     "static/media/undrawParking.svg": "/parking-lots/static/media/undrawParking.0b1181e01b84529f848408de35aeda71.svg",
     "static/media/undrawNotFound.svg": "/parking-lots/static/media/undrawNotFound.26d2c466e47c7ca85c422aaf6360f0da.svg",
     "static/media/SVGFilter.svg": "/parking-lots/static/media/SVGFilter.03964ac523959597a3b005c7d50d35d2.svg",
     "static/media/SVGSetting.svg": "/parking-lots/static/media/SVGSetting.3e7e8942e6d6165f94d7aa5d6d1cd4d4.svg",
     "static/media/SVGPayment.svg": "/parking-lots/static/media/SVGPayment.a46764e2186f6e5ebda942013cf75049.svg",
-    "static/media/SVGPosition.svg": "/parking-lots/static/media/SVGPosition.a59fff027f31348fa4627e22ef390e5c.svg",
-    "static/media/SVGAccount.svg": "/parking-lots/static/media/SVGAccount.f65c4fb41abbc8b462ee5b024b93c223.svg",
+    "static/media/SVGPosition.svg": "/parking-lots/static/media/SVGPosition.8b2a7fd760bd5dfa5c9b96141fa4acba.svg",
+    "static/media/SVGAccount.svg": "/parking-lots/static/media/SVGAccount.16a78c1a1a34dac0e9d200644687814a.svg",
+    "static/media/SVGLastStepInFilter.svg": "/parking-lots/static/media/SVGLastStepInFilter.dcc569565ebe767ea3b9c09f41862900.svg",
     "static/media/SVGLastStep.svg": "/parking-lots/static/media/SVGLastStep.1afa7a80eeaefd66f750506e7d2e1894.svg",
-    "static/media/SVGParking.svg": "/parking-lots/static/media/SVGParking.3f67adf1d208f28947b96f8b74ba9b09.svg",
     "index.html": "/parking-lots/index.html",
+    "static/media/SVGParking.svg": "/parking-lots/static/media/SVGParking.fb0129ad4b755571c9c2348db0077be9.svg",
     "static/media/SVGFind.svg": "/parking-lots/static/media/SVGFind.ab3731641ddc1098c91a9e4524a1d0d6.svg",
-    "static/media/SVGNavigator.svg": "/parking-lots/static/media/SVGNavigator.59f8f2a27ac13766ae709661eab4aca5.svg",
+    "static/media/SVGNavigator.svg": "/parking-lots/static/media/SVGNavigator.491a9e336035bcd466707dc19406d076.svg",
     "static/media/SVGClearText.svg": "/parking-lots/static/media/SVGClearText.191e010071c8dc6bf7fb17809010df94.svg",
-    "static/media/marker.svg": "/parking-lots/static/media/marker.b8eb4b54a5de1f31e93bd589f7bb6e31.svg",
-    "static/media/markerZero.svg": "/parking-lots/static/media/markerZero.4408edbc72bb4c28cdb207cf44e6795c.svg",
-    "main.767898a3.css.map": "/parking-lots/static/css/main.767898a3.css.map",
-    "main.78691ff7.js.map": "/parking-lots/static/js/main.78691ff7.js.map"
+    "static/media/marker.svg": "/parking-lots/static/media/marker.2b871be826f1f9f37eed895bc3d93c67.svg",
+    "static/media/markerZero.svg": "/parking-lots/static/media/markerZero.46550482e54d3126b8410566ecb67cb4.svg",
+    "main.6c782830.css.map": "/parking-lots/static/css/main.6c782830.css.map",
+    "main.32be845f.js.map": "/parking-lots/static/js/main.32be845f.js.map"
   },
   "entrypoints": [
-    "static/css/main.767898a3.css",
-    "static/js/main.78691ff7.js"
+    "static/css/main.6c782830.css",
+    "static/js/main.32be845f.js"
   ]
 }

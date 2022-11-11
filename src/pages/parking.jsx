@@ -22,6 +22,8 @@ import centerLatLngOfDistrict from "../helpers/centerLatLngOfDistrict";
 
 import marker from "./../assets/images/marker.svg";
 import markerZero from "./../assets/images/markerZero.svg";
+import clickedMarker from "./../assets/images/clickedMarker.svg";
+import clickedMarkerZero from "./../assets/images/clickedMarkerZero.svg";
 import Position from "../components/Position";
 import IsLoaded from "../components/IsLoaded";
 
@@ -265,13 +267,13 @@ function Parking() {
         <Marker position={position}/>
         {nearbyMarkers !== [] &&
           nearbyMarkers.map((park) => {
-            if (park.remainingCar > 0 && showRemaining) {
+            if (park.remainingCar > 0 && showRemaining && park.id !== info.id) {
               return (
                 <Marker
                   icon={{
                     url: marker,
                   }}
-                  label={`$${park.FareInfo}`}
+                  label={String(park.remainingCar)}
                   key={park.id}
                   onClick={() => {
                     dispatch(parkingActions.getDataId(park.id));
@@ -280,13 +282,13 @@ function Parking() {
                   position={park.LatLng}
                 />
               );
-            } else if (!showRemaining) {
+            } else if (!showRemaining && park.id !== info.id) {
               return (
                 <Marker
                   icon={{
                     url: park.remainingCar ? marker : markerZero,
                   }}
-                  label={`$${park.FareInfo}`}
+                  label={String(park.remainingCar)}
                   key={park.id}
                   onClick={() => {
                     dispatch(parkingActions.getDataId(park.id));
@@ -301,7 +303,7 @@ function Parking() {
         {info.LatLng !== center && (
           <Marker
             icon={{
-              url: marker,
+              url: info.remainingCar ? clickedMarker : clickedMarkerZero
             }}
             label="選取位置"
             onClick={() => {
@@ -313,10 +315,6 @@ function Parking() {
         {/* 當使用者搜尋後，顯示該停車場 */}
         {searchLatLng && (
           <Marker
-            icon={{
-              url: markerZero,
-            }}
-            label="選取位置"
             position={{
               lat: Number(searchLatLng.lat),
               lng: Number(searchLatLng.lng),
@@ -328,14 +326,15 @@ function Parking() {
           if (
             showRemaining &&
             park.area === district &&
-            park.remainingCar > 0
+            park.remainingCar > 0 &&
+            park.id !== info.id
           ) {
             return (
               <Marker
                 icon={{
                   url: marker,
                 }}
-                label={`$${park.FareInfo}`}
+                label={String(park.remainingCar)}
                 key={park.id}
                 onClick={() => {
                   dispatch(parkingActions.getDataId(park.id));
@@ -343,13 +342,13 @@ function Parking() {
                 position={park.LatLng}
               />
             );
-          } else if (!showRemaining && park.area === district) {
+          } else if (!showRemaining && park.area === district && park.id !== info.id) {
             return (
               <Marker
                 icon={{
                   url: park.remainingCar ? marker : markerZero,
                 }}
-                label={`$${park.FareInfo}`}
+                label={String(park.remainingCar)}
                 key={park.id}
                 onClick={() => {
                   dispatch(parkingActions.getDataId(park.id));

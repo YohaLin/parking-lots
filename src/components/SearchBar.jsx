@@ -1,6 +1,6 @@
 import Icons from "../assets/images/icons";
 import renderText from "../helpers/calcTextLength"; // 不能讓文字超過框框
-import Toast from "../helpers/sweetAlert"
+import Toast from "../helpers/sweetAlert";
 import { parkingActions, searchActions, filterActions } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -40,8 +40,8 @@ function SearchBar() {
     } catch (error) {
       Toast.fire({
         title: "找不到此處，請重新輸入",
-        icon: "error"
-      })
+        icon: "error",
+      });
       setValue("");
     }
   };
@@ -52,18 +52,18 @@ function SearchBar() {
     if (!district) {
       return data.map(({ place_id, description }) => {
         return (
-          <div className="search__input-list" key={place_id}>
+          <button className="search__input-list" key={place_id}>
             <Icons.SVGParking className="search__input-list_SVGParking" />
             {/* 不能讓文字超過框框 */}
             <div className="search__input-list_description">
               {renderText(description, 48)}
             </div>
-          </div>
+          </button>
         );
       });
     }
     // 當從篩選框點選地區時，會把地點印在搜尋框上面，但不能渲染list
-    return
+    return;
   };
 
   // 可以刪除輸入的字和區域上的Marker
@@ -82,14 +82,14 @@ function SearchBar() {
   }
 
   // 當從篩選框點選地區時，會把地點印在搜尋框上面，但不能渲染list
-  useEffect(()=> {
-    if(district){
+  useEffect(() => {
+    if (district) {
       setValue(district);
-    }else{
-      setValue("")
+    } else {
+      setValue("");
     }
-    return
-  }, [district])
+    return;
+  }, [district]);
 
   return (
     <form className="search__container">
@@ -111,34 +111,39 @@ function SearchBar() {
             {status === "OK" && value && <RenderSearchList />}
           </div>
         </div>
-        {value && (
-          <Icons.SVGClearText
-            className="search__input-clearText"
-            onClick={(e)=>{
-              e.preventDefault()
-              clearSearchText()
-            }}
-          />
-        )}
+        <button>
+          {value && (
+            <Icons.SVGClearText
+              className="search__input-clearText"
+              onClick={(e) => {
+                e.preventDefault();
+                clearSearchText();
+                dispatch(parkingActions.removeInfo());
+              }}
+            />
+          )}
+        </button>
         {/* <Icons.SVGFind className="search__input-find" /> */}
         <button>
           <Icons.SVGLastStep
-          className="search__input-lastStep"
-          onClick={(e)=>{
-              e.preventDefault()
-              handleLastStep()
+            className="search__input-lastStep"
+            onClick={(e) => {
+              e.preventDefault();
+              handleLastStep();
             }}
-        />
+          />
         </button>
         <button className="search__input-filter">
-          <Icons.SVGFilter onClick={(e) => {
-            e.preventDefault()
-            if(showFilter){
-              return dispatch(filterActions.notShowFilter());
-            }else{
-              return dispatch(filterActions.showFilter());
-            }
-          }} />
+          <Icons.SVGFilter
+            onClick={(e) => {
+              e.preventDefault();
+              if (showFilter) {
+                return dispatch(filterActions.notShowFilter());
+              } else {
+                return dispatch(filterActions.showFilter());
+              }
+            }}
+          />
         </button>
       </div>
     </form>

@@ -19,8 +19,8 @@ function App() {
       <div>
         <HashRouter>
           <Routes>
-            <Route exact path="/" element={page(<Parking />, "parking")} />
-            <Route exact path="/parking" element={page(<Parking />, "parking")} />
+            <Route path="/" element={page(<Parking />, "parking")} />
+            <Route path="/parking" element={page(<Parking />, "parking")} />
             <Route path="/about" element={page(<About /> ,null)} />
             <Route path="*" element={page(<NotFound />)} />
           </Routes>

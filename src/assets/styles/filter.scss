@@ -11,6 +11,10 @@
   box-shadow: -4px 0 12px 0 rgba(125, 219, 185, 0.7);
   z-index: 200;
   overflow: scroll;
+  // 不要出現捲軸
+  &::-webkit-scrollbar {
+    width: 0;
+  }
 
   &__container {
     padding: 2rem;

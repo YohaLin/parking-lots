@@ -24,6 +24,13 @@
       justify-content: center;
       align-items: center;
       font-size: 12px;
+      width: 4rem;
+      height: 3.25rem;
+      // border: 1px solid black;
+      border-radius: 5px;
+      &:hover {
+        background-color: #ff7b7b;
+      }
     }
   }
 }
@@ -39,10 +46,15 @@
       margin: 0 auto;
       height: 40%;
       .link-logo-1 {
-      display: block;
-    }
+        display: block;
+      }
       .link-logo-2 {
         display: none;
+      }
+
+      .link-container {
+        width: 4rem;
+        height: 4.5rem;
       }
       .link-container span {
         font-size: 1rem;

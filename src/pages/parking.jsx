@@ -16,6 +16,9 @@ import key from "../key";
 import convertProj4 from "../helpers/proj4"; // 將EPSG:3826 轉乘EPSG:4326
 import correctDistrict from "../helpers/correctDistrict";
 import distance from "../helpers/convertDistanceUnit";
+import Toast from "../helpers/sweetAlert";
+import mapStyles from "../helpers/mapStyles";
+import centerLatLngOfDistrict from "../helpers/centerLatLngOfDistrict";
 
 import marker from "./../assets/images/marker.svg";
 import markerZero from "./../assets/images/markerZero.svg";
@@ -44,6 +47,7 @@ function Parking() {
   const myPosition = useSelector((state) => state.myPosition.myPosition); // boolean
   const info = useSelector((state) => state.parking.info);
   const dataId = useSelector((state) => state.parking.dataId);
+  const customizedMapStyle = useSelector((state) => state.parking.customizedMapStyle);
   const searchLatLng = useSelector((state) => state.search.searchLatLng);
   const showFilter = useSelector((state) => state.filter.showFilter);
   const district = useSelector((state) => state.filter.district);
@@ -66,7 +70,10 @@ function Parking() {
 
       setRemainingCar(transformedData); // fetch data 之後就把data塞進setData
     } catch (error) {
-      console.log(error);
+      Toast.fire({
+        icon: "error",
+        title: "取得停車場剩餘資料失敗，請重新整理再試。",
+      });
     }
   }
 
@@ -99,7 +106,10 @@ function Parking() {
 
       setData(transformedData); // fetch data 之後就把data塞進setData
     } catch (error) {
-      console.log(error);
+      Toast.fire({
+        icon: "error",
+        title: "取得停車場資料失敗，請重新整理再試。",
+      });
     }
   }
 
@@ -139,6 +149,7 @@ function Parking() {
     };
     setCenter(centerLatLng);
   }
+  
 
   // 進入網頁就定位目前的位置
   useEffect(() => {
@@ -148,7 +159,7 @@ function Parking() {
   // 當剩餘停車位資料出現時才fetch停車場資料，並定位
   useEffect(() => {
     fetchParkingLotsHandler();
-    navigator.geolocation.watchPosition((position) => {
+    navigator.geolocation.getCurrentPosition((position) => {
       setPosition({
         lat: position.coords.latitude,
         lng: position.coords.longitude,
@@ -158,19 +169,29 @@ function Parking() {
 
   // 決定周圍停車場渲染什麼資料
   useEffect(() => {
-    if(district) {
-      return setNearbyMarkers([])
-    }else if (!center) {
+    if (district) {
+      return setNearbyMarkers([]);
+    } else if (!center) {
       return setNearbyMarkers(generateNearbyMarker(position));
-    } 
+    }
     return setNearbyMarkers(generateNearbyMarker(center));
   }, [center]);
 
-  useEffect(()=>{
-    if(district) {
-      setNearbyMarkers([])
+  // 點選行政區的時候，會自動將畫面導至該行政區
+  useEffect(() => {
+    if (district) {
+      const FilterdDistrict = centerLatLngOfDistrict.find((data)=> {
+        return data.district === district
+      })
+      const LatLngOfDistrict = {
+        lat: FilterdDistrict.lat,
+        lng: FilterdDistrict.lng,
+      }
+      map.panTo(LatLngOfDistrict)
+      return setNearbyMarkers(generateNearbyMarker(LatLngOfDistrict));
     }
-  },[district])
+    return setNearbyMarkers(generateNearbyMarker(center));
+  }, [district]);
 
   // 當按下定位按鈕時會改變redux裡面的state
   useEffect(() => {
@@ -182,12 +203,14 @@ function Parking() {
     // eslint-disable-next-line
   }, [myPosition]);
 
-  // 當取得使用者點擊停車場的id，會將資料放進info
+  // 當取得使用者點擊停車場的id，會將資料放進info，並把畫面調整到該停車場
   useEffect(() => {
     if (dataId) {
       dispatch(parkingActions.getInfo(getInfo(dataId)));
+      map.panTo(getInfo(dataId).LatLng)
     }
   }, [dataId]);
+
 
   // 搜尋後點選可以導至該地點
   useEffect(() => {
@@ -209,28 +232,27 @@ function Parking() {
   });
 
   if (!isLoaded) {
-    return <IsLoaded/>
+    return <IsLoaded />;
   }
 
   // 渲染畫面
   return (
     <div className="park">
-      <div className="park__Position">
-        {!info.id && <Position />}
-      </div>
+      <div className="park__Position">{!info.id && <Position />}</div>
       {showFilter === true && <Filter />}
       <SearchBar />
       {/* 當取得停車場的id時，才渲染卡片。info是物件，不能用info.length */}
       {info.id && <Information data={info} />}
       <GoogleMap
         center={center ? position : center}
-        zoom={15}
+        zoom={17}
         mapContainerStyle={{ width: "100%", height: "100%" }}
         options={{
           zoomControl: false,
           streetViewControl: false,
           mapTypeControl: false,
           fullscreenControl: false,
+          styles: customizedMapStyle? mapStyles: ""  
         }}
         onLoad={(map) => {
           setMap(map);
@@ -240,39 +262,41 @@ function Parking() {
         }}
       >
         {/* 顯示附近的地標 */}
-        {nearbyMarkers !== [] && nearbyMarkers.map((park) => {
-          if(park.remainingCar > 0 && showRemaining) {
-            return (
-              <Marker
-                icon={{
-                  url:  marker,
-                }}
-                label={`$${park.FareInfo}`}
-                key={park.id}
-                onClick={() => {
-                  dispatch(parkingActions.getDataId(park.id));
-                  console.log(park.LatLng)
-                }}
-                position={park.LatLng}
-              />
-            );
-          }else if (!showRemaining) {
-            return (
-              <Marker
-                icon={{
-                  url: park.remainingCar ? marker: markerZero,
-                }}
-                label={`$${park.FareInfo}`}
-                key={park.id}
-                onClick={() => {
-                  dispatch(parkingActions.getDataId(park.id));
-                }}
-                position={park.LatLng}
-              />
-            );
-          }
-          return;
-        })}
+        <Marker position={position}/>
+        {nearbyMarkers !== [] &&
+          nearbyMarkers.map((park) => {
+            if (park.remainingCar > 0 && showRemaining) {
+              return (
+                <Marker
+                  icon={{
+                    url: marker,
+                  }}
+                  label={`$${park.FareInfo}`}
+                  key={park.id}
+                  onClick={() => {
+                    dispatch(parkingActions.getDataId(park.id));
+                    console.log(park.LatLng);
+                  }}
+                  position={park.LatLng}
+                />
+              );
+            } else if (!showRemaining) {
+              return (
+                <Marker
+                  icon={{
+                    url: park.remainingCar ? marker : markerZero,
+                  }}
+                  label={`$${park.FareInfo}`}
+                  key={park.id}
+                  onClick={() => {
+                    dispatch(parkingActions.getDataId(park.id));
+                  }}
+                  position={park.LatLng}
+                />
+              );
+            }
+            return;
+          })}
         {/* 當使用者點開停車場資訊，會顯示該停車場 */}
         {info.LatLng !== center && (
           <Marker
@@ -293,7 +317,10 @@ function Parking() {
               url: markerZero,
             }}
             label="選取位置"
-            position={{lat: Number(searchLatLng.lat), lng: Number(searchLatLng.lng)}}
+            position={{
+              lat: Number(searchLatLng.lat),
+              lng: Number(searchLatLng.lng),
+            }}
           />
         )}
         {/* 依照行政區及剩餘車位數來顯示地標 */}
@@ -316,24 +343,21 @@ function Parking() {
                 position={park.LatLng}
               />
             );
-          } else if (
-              !showRemaining &&
-              park.area === district 
-            ) {
-              return (
-                <Marker
-                  icon={{
-                    url: park.remainingCar ? marker: markerZero,
-                  }}
-                  label={`$${park.FareInfo}`}
-                  key={park.id}
-                  onClick={() => {
-                    dispatch(parkingActions.getDataId(park.id));
-                  }}
-                  position={park.LatLng}
-                />
-              );
-            } 
+          } else if (!showRemaining && park.area === district) {
+            return (
+              <Marker
+                icon={{
+                  url: park.remainingCar ? marker : markerZero,
+                }}
+                label={`$${park.FareInfo}`}
+                key={park.id}
+                onClick={() => {
+                  dispatch(parkingActions.getDataId(park.id));
+                }}
+                position={park.LatLng}
+              />
+            );
+          }
           return;
         })}
       </GoogleMap>

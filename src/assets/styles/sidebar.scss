@@ -1,11 +1,12 @@
 .sidebar {
   width: 100vw;
   height: 3.25rem;
-  background-color: #fff;
+  background-color: #7ddbb9;
+  color: white;
   position: fixed;
   left: 0;
   bottom: 0;
-  box-shadow: 0 -4px 12px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -4px 12px 0 rgba(125, 219, 185, 0.7);
   z-index: 100;
   ul {
     display: flex;
@@ -14,6 +15,9 @@
     margin: 0 auto;
     width: 80%;
     height: 100%;
+    .link-logo-1 {
+      display: none;
+    }
     .link-container {
       display: flex;
       flex-direction: column;
@@ -28,12 +32,18 @@
   .sidebar {
     width: 5.75rem;
     height: 100vh;
-    box-shadow: 4px 0 12px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 4px 0 12px 0 rgba(125, 219, 185, 0.7);
     ul {
       padding-top: 2rem;
       flex-direction: column;
       margin: 0 auto;
-      height: 70%;
+      height: 40%;
+      .link-logo-1 {
+      display: block;
+    }
+      .link-logo-2 {
+        display: none;
+      }
       .link-container span {
         font-size: 1rem;
         padding-top: 0.5rem;

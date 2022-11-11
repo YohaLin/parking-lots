@@ -1,12 +1,13 @@
 import Icons from "../assets/images/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { filterActions } from "../store/store";
+import { filterActions, parkingActions } from "../store/store";
 
 function Filter() {
   const dispatch = useDispatch();
   const showFilter = useSelector((state) => state.filter.showFilter);
   const showRemaining = useSelector((state) => state.filter.showRemaining);
   const district = useSelector((state) => state.filter.district);
+  const customizedMapStyle = useSelector((state) => state.parking.customizedMapStyle);
 
   const District = [
     "松山區",
@@ -26,11 +27,11 @@ function Filter() {
   const RenderDistrictButton = District.map((District) => {
     return (
       <li key={District} className="filter__button-items">
-        <button 
+        <button
           className="filter__button-item"
           onClick={(e) => {
             e.preventDefault();
-            dispatch(filterActions.getDistrict(District))
+            dispatch(filterActions.getDistrict(District));
           }}
         >
           <Icons.SVGParking />
@@ -42,22 +43,45 @@ function Filter() {
 
   return (
     <div className="filter">
-      <form className="filter__container">
-        <Icons.SVGLastStep
-          className="filter__SVGLastStep"
-          onClick={()=>{
+      <button className="filter__header-container">
+        <Icons.SVGLastStepInFilter
+          className="filter__header-SVGLastStep"
+          onClick={() => {
             dispatch(filterActions.notShowFilter());
           }}
         />
-        <h2>是否只顯示剩餘車位：預設為「否」</h2>
-        <ul className="filter__button-container">
+      </button>
+      <form className="filter__container"><h2>地圖樣式：</h2>
+        <ul className="filter__button-container remaining">
+          <li>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                dispatch(parkingActions.toggleMapStyle());
+              }}
+              className={
+                customizedMapStyle
+                  ? "filter__button-showRemaining"
+                  : "filter__button-unactive"
+              }
+            >
+              {customizedMapStyle? "Clean Mode" : "Google Map"}
+            </button>
+          </li>
+        </ul>
+        <h2>顯示剩餘車位：</h2>
+        <ul className="filter__button-container remaining">
           <li>
             <button
               onClick={(e) => {
                 e.preventDefault();
                 dispatch(filterActions.showRemaining());
               }}
-              className={showRemaining ? "filter__button-showRemaining" : ""}
+              className={
+                showRemaining
+                  ? "filter__button-showRemaining"
+                  : "filter__button-unactive"
+              }
             >
               是
             </button>
@@ -69,7 +93,9 @@ function Filter() {
                 dispatch(filterActions.notShowRemaining());
               }}
               className={
-                !showRemaining ? "filter__button-notShowRemaining" : ""
+                !showRemaining
+                  ? "filter__button-notShowRemaining"
+                  : "filter__button-unactive"
               }
             >
               否
@@ -77,17 +103,21 @@ function Filter() {
           </li>
         </ul>
         <h2>從區域找：{district ? `「${district}」` : ""}</h2>
-        <ul className="filter__button-container">
-          {RenderDistrictButton}
-        </ul>
-        <button onClick={(e)=>{
-          e.preventDefault()
-          dispatch(filterActions.removeDistrict())
-          dispatch(filterActions.notShowRemaining());
-        }}>
+        <ul className="filter__button-container">{RenderDistrictButton}</ul>
+      </form>
+      <div className="filter__button-cancel-container">
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            dispatch(filterActions.removeDistrict());
+            dispatch(filterActions.notShowRemaining());
+            dispatch(parkingActions.removeInfo());
+          }}
+          className="filter__button-cancel"
+        >
           取消選取
         </button>
-      </form>
+      </div>
     </div>
   );
 }

@@ -20,7 +20,8 @@ const myPositionSlice = createSlice({
 
 const initialParkingState = {
   info: [],
-  dataId: null
+  dataId: null,
+  customizedMapStyle: true
 }
 
 const parkingSlice = createSlice({
@@ -38,6 +39,9 @@ const parkingSlice = createSlice({
     },
     removeInfo(state){
       state.info = []
+    },
+    toggleMapStyle(state){
+      state.customizedMapStyle = !state.customizedMapStyle
     }
   }
 })

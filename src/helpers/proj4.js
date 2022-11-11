@@ -27,3 +27,5 @@ function convertProj4(x, y) {
 
 // console.log(convertProj4(306812.928, 2769892.95)) // 經度、緯度
 export default convertProj4
+
+// module.exports = convertProj4

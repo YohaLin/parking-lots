@@ -12,11 +12,16 @@
   
   &__input{
     // 輸入匡背景的樣式
-      width: 100%;
-      height: 100%;
-      border-radius: 15px;
-      box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
-      background-color: #FFF;
+    width: 100%;
+    height: 100%;
+    color: #696974;
+    border-radius: 15px;
+    border: 2px solid #7DDBB9;
+    box-shadow: 0 0 12px 0 rgba(0, 0, 0, 0.2);
+    background-color: #FFF;
+    ::placeholder{
+      color: #7DDBB9;
+    }
 
     &-container{
       width: 100%;
@@ -89,7 +94,7 @@
       width: 2.25rem;
       top: -0.125rem;
       right: -2.75rem;
-      background-color: #07B53B;
+      background-color: #7DDBB9;
       border-radius: 50%;
     }
 

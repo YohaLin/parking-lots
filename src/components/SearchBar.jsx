@@ -1,5 +1,6 @@
 import Icons from "../assets/images/icons";
 import renderText from "../helpers/calcTextLength"; // 不能讓文字超過框框
+import Toast from "../helpers/sweetAlert"
 import { parkingActions, searchActions, filterActions } from "../store/store";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -22,6 +23,7 @@ function SearchBar() {
   const dispatch = useDispatch();
   const searchLatLng = useSelector((state) => state.search.searchLatLng);
   const district = useSelector((state) => state.filter.district);
+  const showFilter = useSelector((state) => state.filter.showFilter);
 
   // 選擇地點後會印出經緯度
   const handleSelect = async (val) => {
@@ -36,8 +38,10 @@ function SearchBar() {
         setValue("");
       }
     } catch (error) {
-      // TODO: 修改提示
-      alert("找不到此處，請重新輸入");
+      Toast.fire({
+        title: "找不到此處，請重新輸入",
+        icon: "error"
+      })
       setValue("");
     }
   };
@@ -94,7 +98,7 @@ function SearchBar() {
           <input
             value={value}
             type="text"
-            placeholder="今天想去哪兒"
+            placeholder="篩篩車吧！"
             onChange={(e) => setValue(e.target.value)}
           />
           <div
@@ -113,16 +117,22 @@ function SearchBar() {
             onClick={clearSearchText}
           />
         )}
-        <Icons.SVGFind className="search__input-find" />
-        <Icons.SVGLastStep
+        {/* <Icons.SVGFind className="search__input-find" /> */}
+        <button>
+          <Icons.SVGLastStep
           className="search__input-lastStep"
           onClick={handleLastStep}
         />
-        <div className="search__input-filter">
+        </button>
+        <button className="search__input-filter">
           <Icons.SVGFilter onClick={() => {
-            dispatch(filterActions.showFilter());
+            if(showFilter){
+              return dispatch(filterActions.notShowFilter());
+            }else{
+              return dispatch(filterActions.showFilter());
+            }
           }} />
-        </div>
+        </button>
       </div>
     </form>
   );

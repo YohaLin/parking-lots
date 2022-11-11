@@ -4,6 +4,9 @@ function SideBar() {
   return (
     <nav className="sidebar">
       <ul>
+        <li className="link-logo-1">
+          篩篩車®
+        </li>
         <li>
           <Link to="/">
             <div className="link-container">
@@ -11,6 +14,9 @@ function SideBar() {
               <span>停車場</span>
             </div>
           </Link>
+        </li>
+        <li className="link-logo-2">
+          篩篩車®
         </li>
         <li>
           <Link to="/about">
